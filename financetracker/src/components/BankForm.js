@@ -21,6 +21,7 @@ export default function BankForm() {
 
     const [inputs, setInputs] = React.useState({});
     const [type, setType] = React.useState("Withdraw");
+    const [mechantCategory, setMerchantCategory] = React.useState("Dining");
 
     const handleChange = (event) => {
         var name = event.target.name;
@@ -32,9 +33,13 @@ export default function BankForm() {
         setType(event.target.value);
     }
 
+    const handleCategoryChange = (event) => {
+        setMerchantCategory(event.target.value);
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert(`Submitting: ${JSON.stringify(inputs)}, ${JSON.stringify(type)}`);
+        alert(`Submitting: ${JSON.stringify(inputs)}, ${JSON.stringify(type)}, ${JSON.stringify(mechantCategory)}`);
     }
 
     return (
@@ -52,18 +57,31 @@ export default function BankForm() {
                             <form onSubmit={handleSubmit}>
                                 <label className="formlabel">
                                     Withdraw or Deposit:
-                                    <select value={type} onChange={handleTypeChange} className="formselect">
+                                    <select value={type} onChange={handleTypeChange} className="formselect" required>
                                         <option value="withdraw" selected>Withdraw</option>
                                         <option value="deposit">Deposit</option>
                                     </select>
                                 </label>
                                 <label className="formlabel">
                                     Amount:
-                                    <input type="number" name="amount" onChange={handleChange} className="forminput" />
+                                    <input type="number" name="amount" onChange={handleChange} className="forminput" required/>
                                 </label>
                                 <label className="formlabel">
                                     Vendor:
-                                    <input type="text" name="vendor" onChange={handleChange} className="forminput" />
+                                    <input type="text" name="vendor" onChange={handleChange} className="forminput" required/>
+                                </label>
+                                <label className="formlabel">
+                                    Merchant Category:
+                                    <select value={type} onChange={handleCategoryChange} className="formselect" required>
+                                        <option value="Dining" selected>Dining</option>
+                                        <option value="Grocery">Grocery</option>
+                                        <option value="Merchandise">Merchandise</option>
+                                        <option value="Transportation">Transportation</option>
+                                        <option value="Utilities">Utilities</option>
+                                        <option value="Entertainment">Entertainment</option>
+                                        <option value="Miscellaneous">Miscellaneous</option>
+                                        <option value="N/A">N/A</option>
+                                    </select>
                                 </label>
                                 <ThemeProvider theme={theme}>
                                     <Button variant="outlined" color="primary" type="submit">Submit</Button>
