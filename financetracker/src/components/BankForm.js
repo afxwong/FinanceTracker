@@ -39,7 +39,15 @@ export default function BankForm() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert(`Submitting: ${JSON.stringify(inputs)}, ${JSON.stringify(type)}, ${JSON.stringify(mechantCategory)}`);
+        var amount = inputs.amount;
+        var vendor = inputs.vendor;
+        const data = {amount, vendor, type, mechantCategory};
+        
+        fetch("/api/bankformpost", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
     }
 
     return (
