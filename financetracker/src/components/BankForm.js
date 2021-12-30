@@ -7,6 +7,7 @@ import NavBar from './NavBar';
 import { Button } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -42,13 +43,17 @@ export default function BankForm() {
         var date = new Date().toISOString();
         var amount = inputs.amount;
         var vendor = inputs.vendor;
+        if (amount < 0) {
+            alert("Amount cannot be negative");
+            return;
+        }
         const data = {"date": date, amount, vendor, type, mechantCategory};
         
         fetch("/api/bankformpost", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
-        })
+        }).then(alert("Transaction added!"));
     }
 
     return (
@@ -73,7 +78,7 @@ export default function BankForm() {
                                 </label>
                                 <label className="formlabel">
                                     Amount:
-                                    <input type="number" name="amount" onChange={handleChange} className="forminput" required/>
+                                    <input type="number" min="1" name="amount" onChange={handleChange} className="forminput" required/>
                                 </label>
                                 <label className="formlabel">
                                     Vendor:

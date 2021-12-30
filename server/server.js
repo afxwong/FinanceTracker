@@ -7,8 +7,8 @@ const app = express();
 const bodyParser = require('body-parser');
 var jsonparser = bodyParser.json();
 
-app.get('/api', (req, res) => {
-    res.json({ message: "Hello from server!", date: "Today" });
+app.get('/api/bankbalance', async (req, res) => {
+    res.json(await getBalance());
 });
 
 app.post('/api/bankformpost', jsonparser, (req, res) => {
@@ -21,10 +21,28 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
+async function getBalance() {
+    try {
+        await client.connect();
+        const collection = client.db("FinRecords").collection("Balance");
+        var result = await collection.find({}).sort({date:-1}).limit(1).toArray();
+        if (result) {
+            console.log("Found");
+        } else {
+            console.log("No results");
+        }
+        return result[0];
+    } catch (e) {
+        console.log(e);
+    } finally {
+        client.close();
+    }
+}
+
 async function insertTransaction(newTransaction) {
     try {
         await client.connect();
-        const collection = await client.db("FinRecords").collection("BankTransactions");
+        const collection = client.db("FinRecords").collection("BankTransactions");
         const result = await collection.insertOne(newTransaction);
         if (result) {
             console.log("Inserted");
