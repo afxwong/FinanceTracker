@@ -39,9 +39,10 @@ export default function BankForm() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        var date = new Date().toISOString();
         var amount = inputs.amount;
         var vendor = inputs.vendor;
-        const data = {amount, vendor, type, mechantCategory};
+        const data = {"date": date, amount, vendor, type, mechantCategory};
         
         fetch("/api/bankformpost", {
             method: "POST",

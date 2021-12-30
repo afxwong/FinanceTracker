@@ -27,3 +27,4 @@ node_modules/
 .idea/
 public/
 server/resource.js
+server/connection.js
