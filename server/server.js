@@ -27,7 +27,7 @@ app.get('/api/initiatepayment', async (req, res) => {
 
 app.post('/api/bankformpost', jsonparser, async (req, res) => {
     console.log(req.body);
-    insertTransaction(req.body);
+    await insertTransaction(req.body);
     var balanceobj = await getBalance();
     var balance = balanceobj.balance;
     if (req.body.type == "deposit") {
@@ -41,7 +41,7 @@ app.post('/api/bankformpost', jsonparser, async (req, res) => {
 
 app.post('/api/creditformpost', jsonparser, async (req, res) => {
     console.log(req.body);
-    insertCreditTransaction(req.body);
+    await insertCreditTransaction(req.body);
     var paymentobj = await getPayment();
     var payment = paymentobj.balance;
     if (req.body.type == "charge") {

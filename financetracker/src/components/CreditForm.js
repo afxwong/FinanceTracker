@@ -78,7 +78,7 @@ export default function CreditForm() {
                                 </label>
                                 <label className="formlabel">
                                     Amount:
-                                    <input type="number" min="1" name="amount" onChange={handleChange} className="forminput" required/>
+                                    <input type="number" min="1" step="0.01" name="amount" onChange={handleChange} className="forminput" required/>
                                 </label>
                                 <label className="formlabel">
                                     Vendor:
