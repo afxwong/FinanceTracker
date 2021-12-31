@@ -15,7 +15,7 @@ async function listDatabases(client){
 async function addBalance() {
     const collection = await client.db("FinRecords").collection("Balance")
     var date = new Date().toISOString();
-    const result = await collection.insertOne({'date': date, 'balance': 7000});
+    const result = await collection.insertOne({'date': date, 'balance': 12787.17});
     // const result = await collection.find({}).sort({_id:-1}).limit(1).toArray();
 }
 
@@ -31,7 +31,7 @@ async function connect() {
         await client.connect();
  
         // Make the appropriate DB calls
-        await getBalance();
+        await addBalance();
  
     } catch (e) {
         console.error(e);

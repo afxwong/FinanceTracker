@@ -11,9 +11,17 @@ app.get('/api/bankbalance', async (req, res) => {
     res.json(await getBalance());
 });
 
-app.post('/api/bankformpost', jsonparser, (req, res) => {
+app.post('/api/bankformpost', jsonparser, async (req, res) => {
     console.log(req.body);
     insertTransaction(req.body);
+    var balanceobj = await getBalance();
+    var balance = balanceobj.balance;
+    if (req.body.type == "deposit") {
+        balance += parseFloat(req.body.amount);
+    } else {
+        balance -= parseFloat(req.body.amount);
+    }
+    await setBalance(balance);
     res.end();
 });
 
@@ -27,7 +35,7 @@ async function getBalance() {
         const collection = client.db("FinRecords").collection("Balance");
         var result = await collection.find({}).sort({date:-1}).limit(1).toArray();
         if (result) {
-            console.log("Found");
+            console.log("Balance Found");
         } else {
             console.log("No results");
         }
@@ -37,6 +45,25 @@ async function getBalance() {
     } finally {
         client.close();
     }
+}
+
+async function setBalance(amount) {
+    try {
+        await client.connect();
+        const collection = client.db("FinRecords").collection("Balance")
+        var date = new Date().toISOString();
+        const result = await collection.insertOne({'date': date, 'balance': amount});
+        if (result) {
+            console.log("Balance Updated");
+        } else {
+            console.log("Bance not updated");
+        }
+    } catch (e) {
+        console.log(e);
+    } finally {
+        client.close();
+    }
+    
 }
 
 async function insertTransaction(newTransaction) {

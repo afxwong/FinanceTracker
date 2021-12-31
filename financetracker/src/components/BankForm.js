@@ -21,8 +21,8 @@ const theme = createTheme({
 export default function BankForm() {
 
     const [inputs, setInputs] = React.useState({});
-    const [type, setType] = React.useState("Withdraw");
-    const [mechantCategory, setMerchantCategory] = React.useState("Dining");
+    const [type, setType] = React.useState("withdraw");
+    const [merchantCategory, setMerchantCategory] = React.useState("Dining");
 
     const handleChange = (event) => {
         var name = event.target.name;
@@ -47,7 +47,7 @@ export default function BankForm() {
             alert("Amount cannot be negative");
             return;
         }
-        const data = {"date": date, amount, vendor, type, mechantCategory};
+        const data = {"date": date, amount, vendor, type, merchantCategory};
         
         fetch("/api/bankformpost", {
             method: "POST",
@@ -86,11 +86,12 @@ export default function BankForm() {
                                 </label>
                                 <label className="formlabel">
                                     Merchant Category:
-                                    <select value={type} onChange={handleCategoryChange} className="formselect" required>
+                                    <select value={merchantCategory} onChange={handleCategoryChange} className="formselect" required>
                                         <option value="Dining" selected>Dining</option>
                                         <option value="Grocery">Grocery</option>
                                         <option value="Merchandise">Merchandise</option>
                                         <option value="Transportation">Transportation</option>
+                                        <option value="Rent">Rent</option>
                                         <option value="Utilities">Utilities</option>
                                         <option value="Entertainment">Entertainment</option>
                                         <option value="Miscellaneous">Miscellaneous</option>
