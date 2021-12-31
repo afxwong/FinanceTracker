@@ -21,6 +21,13 @@ const theme = createTheme({
 });
 
 export default function HomePage() {
+  const handleSubmit = async (event) => {
+    await fetch('/api/initiatepayment')
+      .then(res => res.json())
+      .then(data => alert(data.message));
+    window.location.reload();
+  }
+
   return (
     <div className="background">
       <div>
@@ -29,7 +36,7 @@ export default function HomePage() {
       <div class="doublecarddiv">
         <BankCardOutlined />
           <ThemeProvider theme={theme}>
-            <Button variant="outlined" color="primary">Initiate Payment</Button>
+            <Button onClick={handleSubmit} variant="outlined" color="primary">Initiate Payment</Button>
           </ThemeProvider>
         <CreditCardOutlined />
       </div>

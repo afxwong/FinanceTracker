@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './components/NavBar';
 import HomePage from './components/HomePage';
 import BankForm from './components/BankForm';
+import CreditForm from './components/CreditForm';
 import { createTheme } from '@mui/material/styles';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -31,7 +32,7 @@ function App() {
           <BankForm />
         </Route>
         <Route path="/creditform">
-          <Temp/>
+          <CreditForm/>
         </Route>
         <Route path="/">
           <HomePage />
@@ -39,10 +40,6 @@ function App() {
       </Switch>
     </Router>
   );
-}
-
-function Temp() {
-  return <h1>Hello</h1>;
 }
 
 export default App;

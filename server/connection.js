@@ -13,9 +13,9 @@ async function listDatabases(client){
 };
 
 async function addBalance() {
-    const collection = await client.db("FinRecords").collection("Balance")
+    const collection = await client.db("FinRecords").collection("Payment")
     var date = new Date().toISOString();
-    const result = await collection.insertOne({'date': date, 'balance': 12787.17});
+    const result = await collection.insertOne({'date': date, 'balance': 193.24});
     // const result = await collection.find({}).sort({_id:-1}).limit(1).toArray();
 }
 

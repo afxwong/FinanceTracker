@@ -9,26 +9,31 @@ import '../components/Card.css';
 import capitalonelogo from '../images/capitalone.png';
 
 
-var CreditCard = (
-    <Card className='card'>
-        <CardContent>
-            <Typography variant="h5" component="h2" style={{ color: '#84C9FB'}}>
-                Payment Due:
-            </Typography>
-            <Typography color="white">
-                $0.00
-            </Typography>
-        </CardContent>
-        <CardActions className='cardcontent'>
-            <img className='logo' src={capitalonelogo} />
-        </CardActions>
-    </Card>
-)
+function CreditCardOutlined() {
+    var [balance, setBalance] = React.useState("Loading...");
+    React.useEffect(() => {
+        fetch("/api/balances")
+        .then((res) => res.json())
+        .then((data) => setBalance(data[1].balance));
+    }, []);
 
-export default function BankCardOutlined() {
-    return (
+    return(
         <Box sx={{ maxWidth: '300px', minWidth:'300px'}}>
-            <Card variant="elevated">{CreditCard}</Card>
+            <Card variant='elevated' className='card'>
+                <CardContent>
+                    <Typography variant="h5" component="h2" style={{ color: '#84C9FB'}}>
+                        Payment Due:
+                    </Typography>
+                    <Typography color="white">
+                        ${balance}
+                    </Typography>
+                </CardContent>
+                <CardActions className='cardcontent'>
+                    <img className='logo' src={capitalonelogo} />
+                </CardActions>
+            </Card>
         </Box>
-    );
+    )
 }
+
+export default CreditCardOutlined;

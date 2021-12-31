@@ -18,10 +18,10 @@ const theme = createTheme({
   },
 });
 
-export default function BankForm() {
+export default function CreditForm() {
 
     const [inputs, setInputs] = React.useState({});
-    const [type, setType] = React.useState("withdraw");
+    const [type, setType] = React.useState("charge");
     const [merchantCategory, setMerchantCategory] = React.useState("Dining");
 
     const handleChange = (event) => {
@@ -62,7 +62,7 @@ export default function BankForm() {
                 <NavBar />
             </div>
             <div>
-                <h3>Submit a Bank Transaction</h3>
+                <h3>Submit a Credit Card Transaction</h3>
             </div>
             <div className='singlecarddiv'>
                 <Box sx={{ maxWidth: '500px', minWidth:'500px'}}>
@@ -70,10 +70,10 @@ export default function BankForm() {
                         <CardContent>
                             <form onSubmit={handleSubmit}>
                                 <label className="formlabel">
-                                    Withdraw or Deposit:
+                                    Charge or Refund:
                                     <select value={type} onChange={handleTypeChange} className="formselect" required>
-                                        <option value="withdraw" selected>Withdraw</option>
-                                        <option value="deposit">Deposit</option>
+                                        <option value="charge" selected>Charge</option>
+                                        <option value="refund">Refund</option>
                                     </select>
                                 </label>
                                 <label className="formlabel">
@@ -91,8 +91,6 @@ export default function BankForm() {
                                         <option value="Grocery">Grocery</option>
                                         <option value="Merchandise">Merchandise</option>
                                         <option value="Transportation">Transportation</option>
-                                        <option value="Rent">Rent</option>
-                                        <option value="Utilities">Utilities</option>
                                         <option value="Entertainment">Entertainment</option>
                                         <option value="Miscellaneous">Miscellaneous</option>
                                         <option value="N/A">N/A</option>

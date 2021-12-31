@@ -12,9 +12,9 @@ import wellsfargologo from '../images/wells_fargo_.png';
 function BankCardOutlined() {
     var [balance, setBalance] = React.useState("Loading...");
     React.useEffect(() => {
-        fetch("/api/bankbalance")
+        fetch("/api/balances")
         .then((res) => res.json())
-        .then((data) => setBalance(data.balance));
+        .then((data) => setBalance(data[0].balance));
     }, []);
 
     return (
