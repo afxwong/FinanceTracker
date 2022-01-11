@@ -49,7 +49,7 @@ export default function BankForm() {
         }
         const data = {"date": date, amount, vendor, type, merchantCategory};
         
-        fetch("/api/creditformpost", {
+        fetch("/api/bankformpost", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)

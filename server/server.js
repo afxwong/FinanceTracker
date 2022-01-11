@@ -27,29 +27,31 @@ app.get('/api/initiatepayment', async (req, res) => {
 
 app.post('/api/bankformpost', jsonparser, async (req, res) => {
     console.log(req.body);
+    req.body.amount = parseFloat(req.body.amount);
     await insertTransaction(req.body);
     var balanceobj = await getBalance();
     var balance = balanceobj.balance;
     if (req.body.type == "deposit") {
-        balance += parseFloat(req.body.amount);
+        balance += parseFloat(parseFloat(req.body.amount).toFixed(2));
     } else {
-        balance -= parseFloat(req.body.amount);
+        balance -= parseFloat(parseFloat(req.body.amount).toFixed(2));
     }
-    await setBalance(balance);
+    await setBalance(parseFloat(parseFloat(balance).toFixed(2)));
     res.end();
 });
 
 app.post('/api/creditformpost', jsonparser, async (req, res) => {
     console.log(req.body);
+    req.body.amount = parseFloat(req.body.amount);
     await insertCreditTransaction(req.body);
     var paymentobj = await getPayment();
     var payment = paymentobj.balance;
     if (req.body.type == "charge") {
-        payment += parseFloat(req.body.amount);
+        payment += parseFloat(parseFloat(req.body.amount).toFixed(2));
     } else {
-        payment -= parseFloat(req.body.amount);
+        payment -= parseFloat(parseFloat(req.body.amount).toFixed(2));
     }
-    await setPayment(payment);
+    await setPayment(parseFloat(parseFloat(payment).toFixed(2)));
     res.end();
 });
 
@@ -80,7 +82,7 @@ async function setBalance(amount) {
         await client.connect();
         const collection = client.db("FinRecords").collection("Balance")
         var date = new Date().toISOString();
-        const result = await collection.insertOne({'date': date, 'balance': amount});
+        const result = await collection.insertOne({'date': date, 'balance': parseFloat(amount)});
         if (result) {
             console.log("Balance Updated");
         } else {
@@ -117,7 +119,7 @@ async function setPayment(amount) {
         await client.connect();
         const collection = client.db("FinRecords").collection("Payment")
         var date = new Date().toISOString();
-        const result = await collection.insertOne({'date': date, 'balance': amount});
+        const result = await collection.insertOne({'date': date, 'balance': parseFloat(amount)});
         if (result) {
             console.log("Payment Updated");
         } else {
