@@ -166,3 +166,14 @@ async function insertCreditTransaction(newTransaction) {
         client.close();
     }
 }
+
+// async function calculateWeeklySpend() {
+//     try {
+//         await client.connect();
+//         const collection = client.db("FinRecords").collection("Balance");
+//         var allbalances = await collection.find({}).sort({date:-1}).toArray();
+//         var current = allbalances[0];
+//         var date = new Date().toISOString();
+//         var 
+//     }
+// }
